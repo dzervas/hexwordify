@@ -47,9 +47,9 @@ def main():
 
     parse = argparse.ArgumentParser(description="""
             Turn hexadecimal strings to readable words.
-            By default uses bip-0039 bitcoin wordlist (2048 words)
+            By default uses bip-0039 bitcoin wordlist (2048 words).
             If no hex arguments are given, script reads from stding and does
-            regex search for hex strings longer than `min_size` characters
+            regex search for hex strings longer than `min_size` characters.
 
             Example: gpg -k | hex2words.py
             """)

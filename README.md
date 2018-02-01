@@ -1,4 +1,4 @@
-# Hex2Words
+# Hexwordify
 
 This is a simple script that finds hex strings to the input given and maps it
 to words with the [`bip-0039`](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) wordlist.
@@ -7,13 +7,13 @@ easier.
 
 ## Usage
 ```
-usage: hex2words.py [-h] [-c] [-p] [-r] [-s MIN_SIZE]
+usage: hexwordify.py [-h] [-c] [-p] [-r] [-s MIN_SIZE]
                     [hex_string [hex_string ...]]
 
 Turn hexadecimal strings to readable words. By default uses bip-0039 bitcoin
 wordlist (2048 words). If no hex arguments are given, script reads from stding
 and does regex search for hex strings longer than `min_size` characters.
-Example: gpg -k | hex2words.py
+Example: gpg -k | hexwordify.py
 
 positional arguments:
   hex_string            Hex strings to turn into words
@@ -41,7 +41,7 @@ uid           [ultimate] Dimitris Zervas <csd3502@csd.uoc.gr>
 uid           [ultimate] Dimitris Zervas <dzervas@ics.forth.gr>
 sub   rsa4096 2015-01-25 [E]
 
-dzervas ~> gpg --list-public-keys dzervas@dzervas.gr | hex2words
+dzervas ~> gpg --list-public-keys dzervas@dzervas.gr | hexwordify
 pub   rsa4096 2015-01-25 [SC]
       coral evolve fitness stuff rebuild able fringe loud dice tumble pact snap express cycle object
 uid           [ultimate] Dimitris Zervas <dzervas@dzervas.gr>

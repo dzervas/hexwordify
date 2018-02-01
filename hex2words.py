@@ -8,39 +8,42 @@ regex search for hex strings longer than `min_size` characters.
 Example: gpg -k | hex2words.py
 """
 import math
-import os.path
-
-WORDLIST_URL = "https://raw.githubusercontent.com/bitcoin/bips/master/bip-0039"
-WORDLIST_FILE = os.path.expanduser("~/.bip-0039.txt")
+import bip_0039
 
 
-def transform(string):
+# The list is not altered, so its not a dangerous default value anymore:
+# pylint: disable=dangerous-default-value
+def transform(string, wordlist=bip_0039.WORDLIST):
     """
-    Transforms a hexadecimal string to a string of words delimited with space
+    Transforms a hexadecimal string to a string of words delimited with space.
     """
     dictlist = []
 
-    with open(WORDLIST_FILE, "r") as wordlist_file:
-        wordlist_lines = wordlist_file.readlines()
-        logarithm = int(math.log(len(wordlist_lines), 2))
-        mask = 2**logarithm - 1
+    if len(wordlist) < 1:
+        return []
 
-        # Split hex string to 64 bit integers (every character is 4 bits)
-        for i in range(0, int(len(string) / 128) + bool(len(string) % 128)):
-            hex_string = int(string[i * 128:(i + 1) * 128], 16)
-            # Pad LS bits
-            hex_string = hex_string << ((len(string) * 4) % logarithm)
+    logarithm = int(math.log(len(wordlist), 2))
+    mask = 2**logarithm - 1
 
-            while hex_string > 0:
-                hex_index = hex_string & mask
-                dictlist.insert(0, wordlist_lines[hex_index].strip())
-                hex_string = hex_string >> logarithm
+    # Split hex string to 64 bit integers (every character is 4 bits)
+    for i in range(0, int(len(string) / 128) + bool(len(string) % 128)):
+        # Parse string as hex
+        hex_string = int(string[i * 128:(i + 1) * 128], 16)
+        # Pad LS bits
+        hex_string = hex_string << ((len(string) * 4) % logarithm)
+
+        while hex_string > 0:
+            hex_index = hex_string & mask
+            dictlist.insert(0, wordlist[hex_index].strip())
+            hex_string = hex_string >> logarithm
 
     return dictlist
 
 
 def wrapper(string, prepend, color):
-    """Console wrapper. Takes care of coloring, append/prepend."""
+    """
+    Console wrapper. Takes care of coloring and original string appending
+    """
     result = ""
     if prepend:
         result = string + ": "
@@ -57,27 +60,15 @@ def wrapper(string, prepend, color):
 
 
 def main():
-    """Main console function"""
+    """
+    Main console function
+    """
     import argparse
     import sys
-
-    global WORDLIST_FILE
 
     parse = argparse.ArgumentParser(description=__doc__)
     parse.add_argument("-c", "--no-color", action="store_true",
                        help="Disable colored output")
-    parse.add_argument("-l", "--lang", default="english", help="""
-                       Language of dictionary to download/use \
-                               (does not work with -w). Available languages:
-                       chinese_simplified,
-                       chinese_traditional,
-                       english,
-                       french,
-                       italian,
-                       japanese,
-                       korean,
-                       spanish
-                       """)
     parse.add_argument("-p", "--prepend", action="store_true",
                        help="Prepend string given to output")
     parse.add_argument("-r", "--no-replace", action="store_true",
@@ -86,29 +77,13 @@ def main():
     parse.add_argument("-s", "--min-size", type=int, default=32,
                        help="Minimum hex string size to search for in input \
                             (only used if no hex arguments are given)")
-    parse.add_argument("-u", "--update", action="store_true",
-                       help="Update (re-download) wordlist")
-    parse.add_argument("-w", "--wordlist", default=WORDLIST_FILE,
-                       help="Path to wordlist")
     parse.add_argument("strings", metavar="hex_string", nargs="*",
                        help="Hex strings to turn into words")
     args = parse.parse_args()
 
-    WORDLIST_FILE = args.wordlist
-
     def wrapper_args(strings):
         """Simple wrapper to add arguments as needed"""
         return wrapper(strings[0], args.prepend, not args.no_color)
-
-    if not os.path.exists(WORDLIST_FILE) or args.update:
-        import urllib.request
-        print("Downloading wordlist from %s" %
-              (WORDLIST_URL + "/" + args.lang + ".txt"))
-        urllib.request.urlretrieve(WORDLIST_URL + "/" + args.lang + ".txt",
-                                   filename=WORDLIST_FILE)
-
-        if args.update:
-            exit()
 
     if args.strings:
         for string in args.strings:

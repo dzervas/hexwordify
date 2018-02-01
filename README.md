@@ -7,8 +7,7 @@ easier.
 
 ## Usage
 ```
-hex2words.py [-h] [-c] [-l LANG] [-p] [-r] [-s MIN_SIZE] [-u]
-                    [-w WORDLIST]
+usage: hex2words.py [-h] [-c] [-p] [-r] [-s MIN_SIZE]
                     [hex_string [hex_string ...]]
 
 Turn hexadecimal strings to readable words. By default uses bip-0039 bitcoin
@@ -22,19 +21,12 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -c, --no-color        Disable colored output
-  -l LANG, --lang LANG  Language of dictionary to download/use (does not work
-                        with -w). Available languages: chinese_simplified,
-                        chinese_traditional, english, french, italian,
-                        japanese, korean, spanish
   -p, --prepend         Prepend string given to output
   -r, --no-replace      Ouput only found hex strings (only used if no hex
                         arguments are given)
   -s MIN_SIZE, --min-size MIN_SIZE
                         Minimum hex string size to search for in input (only
                         used if no hex arguments are given)
-  -u, --update          Update (re-download) wordlist
-  -w WORDLIST, --wordlist WORDLIST
-                        Path to wordlist
 ```
 
 ## Example
@@ -49,9 +41,9 @@ uid           [ultimate] Dimitris Zervas <csd3502@csd.uoc.gr>
 uid           [ultimate] Dimitris Zervas <dzervas@ics.forth.gr>
 sub   rsa4096 2015-01-25 [E]
 
-dzervas ~> gpg --list-public-keys dzervas@dzervas.gr | ~/Lab/hex2words/hex2words.py
+dzervas ~> gpg --list-public-keys dzervas@dzervas.gr | hex2words
 pub   rsa4096 2015-01-25 [SC]
-      blossom poem program type fluid ability company dragon pact vivid exercise trade chronic bread act
+      coral evolve fitness stuff rebuild able fringe loud dice tumble pact snap express cycle object
 uid           [ultimate] Dimitris Zervas <dzervas@dzervas.gr>
 uid           [ultimate] Dimitris Zervas <01ttouch@gmail.com>
 uid           [ultimate] Dimitris Zervas <dzervas@tolabaki.gr>

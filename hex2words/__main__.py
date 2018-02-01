@@ -28,7 +28,10 @@ def main():
 
     def wrapper_args(strings):
         """Simple wrapper to add arguments as needed"""
-        return wrapper(strings[0], args.prepend, not args.no_color)
+        # try:
+            # return wrapper(strings[0], args.prepend, not args.no_color)
+        # except TypeError:
+        return wrapper(strings.group(0), args.prepend, not args.no_color)
 
     if args.strings:
         for string in args.strings:

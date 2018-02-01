@@ -9,7 +9,7 @@ Example: gpg -k | hex2words.py
 import math
 try:
     from .bip_0039 import WORDLIST
-except ImportError:
+except (ImportError, ValueError):
     from bip_0039 import WORDLIST
 
 

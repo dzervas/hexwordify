@@ -2,19 +2,18 @@
 from setuptools import setup
 
 setup(
-    name="hex2words",
+    name="hexwordify",
     description="Turn hexadecimal strings to readable words.",
     version="0.0.1",
 
     author="Dimitris Zervas",
     author_email="dzervas@dzervas.gr",
 
-    packages=["hex2words"],
+    packages=["hexwordify"],
 
-    # scripts=["hex2words=hex2words.py"]
     entry_points={
         "console_scripts": [
-            "hex2words=hex2words.__main__:main",
+            "hexwordify=hexwordify.__main__:main",
         ],
     },
 )

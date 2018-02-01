@@ -1,7 +1,7 @@
 """
 Console module
 """
-from hex2words import wrapper
+from hexwordify import wrapper
 
 
 def main():

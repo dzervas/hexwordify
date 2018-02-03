@@ -2,7 +2,7 @@
 bip-0039 wordlist, defined by the bitcoin standard
 """
 
-WORDLIST = [
+WORDLIST = (
     "abandon", "ability", "able", "about", "above",
     "absent", "absorb", "abstract", "absurd", "abuse",
     "access", "accident", "account", "accuse", "achieve",
@@ -413,4 +413,4 @@ WORDLIST = [
     "wrist", "write", "wrong", "yard", "year",
     "yellow", "you", "young", "youth", "zebra",
     "zero", "zone", "zoo",
-]
+)

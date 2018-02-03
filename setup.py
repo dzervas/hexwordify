@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="hexwordify",
     description="Turn hexadecimal strings to readable words.",
-    version="0.0.2a",
+    version="0.0.3",
 
     author="Dimitris Zervas",
     author_email="dzervas@dzervas.gr",
